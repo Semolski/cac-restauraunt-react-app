@@ -1,0 +1,37 @@
+import React from 'react'
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
+
+function RenderCard({item}) {
+    return (
+        <Card>
+            <CardImg src={item.image} alt={item.name}/>
+            <CardBody>
+                <CardTitle>{item.name}</CardTitle>
+                {/*Javascript code inside JSX ... ? means not null it is rendered as cardsubtitle.
+                item.designation only exists for the leader, otherwise it will be rendered as null. No element will be returned. */}
+                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle>:null}
+                <CardText>{item.description}</CardText>
+            </CardBody>
+        </Card>
+    )
+}
+
+function Home(props) {
+    return(
+        <div className="container">
+            <div className="row align-items-start">
+                <div className="col-12 col-md m-1">
+                    <RenderCard item={props.dish} />
+                </div>
+                <div className="col-12 col-md m-1">
+                    <RenderCard item={props.promotion}/>
+                </div>
+                <div className="col-12 col-md-m-1">
+                    <RenderCard item={props.leader} />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Home
