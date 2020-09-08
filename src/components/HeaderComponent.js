@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} from 'reactstrap';
+import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
+    Modal, ModalBody, ModalHeader, Form, FormGroup, Input, Button, Label} from 'reactstrap';
 import {NavLink} from 'react-router-dom'
 
 // It is a class component and not a function because the state will be changing
@@ -8,9 +9,12 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state ={
-            isNavOpen: false
+            isNavOpen: false,
+            isModalOpen: false
         };
-        this.toggleNav = this.toggleNav.bind(this)
+        this.toggleNav = this.toggleNav.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
     // We set the state again so when it becomes false it will be true and vice versa. Whenever
     // This is executed, the value will be swapped.
@@ -22,6 +26,25 @@ class Header extends Component {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
+    }
+
+    // To toggle the value of the modal, a new function must be implemented. Afterwards, it must be bound
+    // It will be invoked within the bootstrap class <Modal>
+    toggleModal(){
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    // Since we are going to implement this as an uncontrolled form,
+    // We must implement this function which receives the event as the parameter
+    // It must be bound as well.
+    handleLogin(event){
+        // At this point we will close the modal once it is submitted.
+        this.toggleModal();
+        alert("Username: " + this.username.value + "Password: " + this.password.value
+        + " Remember: " + this.remember.checked);
+        event.preventDefault();
     }
 
     render() {
@@ -66,6 +89,13 @@ class Header extends Component {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
+                            <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    <Button outline onClick={this.toggleModal}>
+                                        <span className="fa fa-sign-in fa-lg">Login</span>
+                                    </Button>
+                                </NavItem>
+                            </Nav>
                         </Collapse>
                     </div>
                 </Navbar>
@@ -79,6 +109,35 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
+                {/* Setting up a modal with an uncontrolled form. This modal will be controlled from the
+                 React component. For this modal to be shown, a new value in the state must be set.
+                 with a boolean variable to track whether or not the state is open.
+                  */}
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                    <ModalBody>
+                        {/*// To retrieve the values to the form we must get the references.
+                        Since we are using reactstrap we cannot use refs because it is used for something else.
+                        innerRef can be used instead. */}
+                        <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" id="username" name="username" innerRef={(input) => this.username = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password" name="password" innerRef={(input) => this.password = input} />
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="remember" innerRef={(input) => this.remember = input}/>
+                                    Remember Me
+                                </Label>
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
             </React.Fragment>
         )
     }
