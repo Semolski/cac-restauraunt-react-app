@@ -1,6 +1,6 @@
 import React from "react";
-import {Card, CardImg, CardBody, CardText, CardTitle} from "reactstrap";
-
+import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb} from "reactstrap";
+import { Link } from 'react-router-dom'
 
 
     // componentDidMount() {
@@ -57,9 +57,24 @@ const DishDetail = (props) => {
         if (props.dish != null)
             return (
                 <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to="/menu">Menu</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                        <div className="col-12">
+                            {/*It is props.dish.name so the title of the breadcrumb is the title of the dish*/}
+                            <h3>{props.dish.name}</h3>
+                            <hr/>
+                        </div>
+                    </div>
                     <div className="row">`
                         <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.dish.comments} />
+                        {/*Now that comments are being passed in separately from the dish, it doesn't
+                        need to be props.dish.comments */}
+                        <RenderComments comments={props.comments} />
                     </div>
                 </div>
             );
@@ -67,7 +82,7 @@ const DishDetail = (props) => {
             return (
                 <div />
             )
-    }
+    };
 
     // renderComments(comments) {
     //     if (comments != null) {
