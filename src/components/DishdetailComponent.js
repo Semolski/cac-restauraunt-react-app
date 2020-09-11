@@ -50,6 +50,8 @@ import { Link } from 'react-router-dom'
             )
     }
 
+
+
 const DishDetail = (props) => {
 
         console.log('Dishdetail Component component render invoked');
