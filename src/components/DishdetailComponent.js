@@ -1,6 +1,7 @@
 import React from "react";
 import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb} from "reactstrap";
 import { Link } from 'react-router-dom'
+import Comment from "./CommentForm";
 
 
     // componentDidMount() {
@@ -41,10 +42,11 @@ import { Link } from 'react-router-dom'
                                 </li>
                             );
                         })}
+                        <Comment />
                     </ul>
                 </div>
             );
-        else
+        elseh
             return(
                 <div />
             )
