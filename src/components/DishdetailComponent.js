@@ -1,6 +1,7 @@
 import React from "react";
-import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb} from "reactstrap";
+import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb, Button} from "reactstrap";
 import { Link } from 'react-router-dom'
+import Comment from './CommentForm';
 
 
     // componentDidMount() {
@@ -41,6 +42,7 @@ import { Link } from 'react-router-dom'
                                 </li>
                             );
                         })}
+                        <Comment />
                     </ul>
                 </div>
             );
@@ -78,6 +80,7 @@ const DishDetail = (props) => {
                         need to be props.dish.comments */}
                         <RenderComments comments={props.comments} />
                     </div>
+
                 </div>
             );
         else

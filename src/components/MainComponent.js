@@ -28,11 +28,6 @@ const mapStateToProps = state => {
 
 class Main extends Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
     // Now that this component is using properties from the store, everything using the state
     // must be changed to props. Example: this.state.dishes.filter becomes this.props.dishes.filter
     render() {
