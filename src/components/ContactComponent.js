@@ -1,7 +1,7 @@
 import React,  {Component} from 'react'
 import {Breadcrumb, BreadcrumbItem, Button, Label, Row, Col, } from "reactstrap";
 import {Link} from "react-router-dom";
-import {Control, LocalForm, Errors} from "react-redux-form";
+import {Control, Form, Errors, actions} from "react-redux-form";
 
 // These consts for React Redux Local Form Validation
 const required = (val) => val && val.length;
@@ -144,6 +144,7 @@ class Contact extends Component {
     handleSubmit(values) {
         console.log("Current State is: " + JSON.stringify(values));
         alert("Current State is: " + JSON.stringify(values));
+        this.props.resetFeedbackForm();
         // event.preventDefault();
     }
 
@@ -198,7 +199,7 @@ class Contact extends Component {
                     {/*To update our form to use React Redux Form,*/}
                     {/*<Form> must be updated as <LocalForm>*/}
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                             {/*Having <FormGroup> allows you to define it as a row*/}
                             {/* The <FormGroup> will be changed into a <Row> and the className will be
                              className="form-group" because reactstrap is not being used, just bootstrap
@@ -358,7 +359,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>

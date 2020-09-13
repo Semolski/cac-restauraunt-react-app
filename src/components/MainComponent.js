@@ -59,7 +59,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
    addComment: (dishId, rating, author, comment) => dispatch(addComment (dishId, rating, author, comment)),
-    fetchDishes: () => {dispatch(fetchDishes())}
+    fetchDishes: () => { dispatch(fetchDishes())},
     // The form will be named as feedback
     resetFeedbackForm:() => {dispatch(actions.reset('feedback'))}
 });
