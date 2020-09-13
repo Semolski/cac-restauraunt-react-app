@@ -1,8 +1,8 @@
 import React from "react";
 import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb, Button} from "reactstrap";
 import { Link } from 'react-router-dom'
-import Comment from './CommentForm';
-
+import CommentForm from './CommentForm';
+import { Loading } from './LoadingComponent'
 
     // componentDidMount() {
     //     console.log('Dishdetail Component componentDidMount ')
@@ -27,8 +27,10 @@ import Comment from './CommentForm';
             </div>
         )
     }
-
-    function RenderComments({comments}) {
+// In the RenderComments function, along with the comments, it
+// will also recieve addComment, and dishId.
+// Those two just need to passed directly to the comment form.
+    function RenderComments({comments, addComment, dishId}) {
         if (comments != null)
             return(
                 <div className="col-12 col-md-5 m-1">
@@ -42,7 +44,10 @@ import Comment from './CommentForm';
                                 </li>
                             );
                         })}
-                        <Comment />
+                        {/*// dishId and addComment have been extracted already from the props.*/}
+                        {/*// so they are already available to use. They will be passed to the CommentForm*/}
+                        {/*// component.*/}
+                        <CommentForm dishId={dishId} addComment={addComment} />
                     </ul>
                 </div>
             );
@@ -55,10 +60,37 @@ import Comment from './CommentForm';
 
 
 const DishDetail = (props) => {
+    // This is saying if isLoading is true then we will simply return
+    // the view as the loading component, so the loading
+    // spinner will be shown.
+    //
+    // This structure will be made of use at multiple place in the
+    // application where the details of the dish are displayed.
+    //
+    // The dish information is displayed in 3 different components.
+    // <DishDetail> <Home> <Menu>
+    //
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        // console.log('Dishdetail Component component render invoked');
 
-        console.log('Dishdetail Component component render invoked');
-
-        if (props.dish != null)
+        else if (props.dish != null)
             return (
                 <div className="container">
                     <div className="row">
@@ -78,7 +110,9 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish} />
                         {/*Now that comments are being passed in separately from the dish, it doesn't
                         need to be props.dish.comments */}
-                        <RenderComments comments={props.comments} />
+                        <RenderComments comments={props.comments}
+                         addComment={props.addComment}
+                        dishId={props.dish.id}/>
                     </div>
 
                 </div>
