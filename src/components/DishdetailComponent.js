@@ -46,7 +46,7 @@ import Comment from "./CommentForm";
                     </ul>
                 </div>
             );
-        elseh
+        else
             return(
                 <div />
             )
