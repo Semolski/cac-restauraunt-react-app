@@ -6,7 +6,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-class Comment extends Component {
+class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state ={
@@ -23,9 +23,11 @@ class Comment extends Component {
     }
 
     handleSubmit(values) {
-        console.log("Current State is: " + JSON.stringify(values));
-        alert("Current State is: " + JSON.stringify(values));
+        this.toggleModal()
+        // console.log("Current State is: " + JSON.stringify(values));
+        // alert("Current State is: " + JSON.stringify(values));
         // event.preventDefault();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
@@ -93,4 +95,4 @@ class Comment extends Component {
 
 }
 
-export default Comment;
+export default CommentForm;
