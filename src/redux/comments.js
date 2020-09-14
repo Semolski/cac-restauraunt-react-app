@@ -1,4 +1,6 @@
-import {COMMENTS} from '../shared/comments';
+// We no longer need this line here because the comments will be
+// fetched from the server.
+// import {COMMENTS} from '../shared/comments';
 import * as ActionTypes from './ActionTypes';
 
 // To make use of this reducer function, go into the MainComponent.js
@@ -12,8 +14,17 @@ import * as ActionTypes from './ActionTypes';
 // If the type property matches that of the action,
 // then this reducer function should do something to the state.
 // In this case when it recieves the comment,
-export const Comments = (state = COMMENTS, action) => {
+export const Comments = (state = {
+    errMess: null,
+    comments: []
+}, action) => {
     switch (action.type) {
+        case ActionTypes.ADD_COMMENTS:
+            return {...state, errMess: null, comments: action.payload};
+
+        case ActionTypes.COMMENTS_FAILED:
+            return {...state, errMess: action.payload};
+
         case ActionTypes.ADD_COMMENT:
         var comment = action.payload;
         // the comments are a JS array, the length tells how many
@@ -28,9 +39,12 @@ export const Comments = (state = COMMENTS, action) => {
             // object that can be returned by the reducer function.
             // Note: The comments are ONLY being added to memory at this time.
             // if the app is restarted, the added comment will be gone.
-        comment.id = state.length;
+        comment.id = state.comments.length;
         comment.date = new Date().toISOString();
-        return state.concat(comment);
+        // Here the state shape has changed from the original,
+            // curly brackets must be placed around it {...}
+            // from state.concat(comment)
+        return {...state, comments: state.comments.concat(comment)};
         default:
             return state;
     }

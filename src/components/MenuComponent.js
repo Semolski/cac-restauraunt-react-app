@@ -2,6 +2,7 @@ import React from "react";
 import {Card, CardImg, CardTitle, CardImgOverlay, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { baseUrl} from "../shared/baseUrl";
 
 function RenderMenuItem({dish, onClick}) {
     return (
@@ -10,7 +11,12 @@ function RenderMenuItem({dish, onClick}) {
              And it will be substituted. So if the id is 1 the address will become
              /menu/1 */}
             <Link to={`/menu/${dish.id}`}>
-            <CardImg width="100%" src={dish.image} alt={dish.name}/>
+            {/*    Adding baseUrl + will ensure it will be fetched directly
+            from the server before rendering the items. We want it to be fetched
+            from the server because when the server is updated we don't want to realize
+            the img doesn't exist in the current application. The only images that will
+            be used locally is the logo because it won't keep changing all the time.  */}
+            <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
             <CardImgOverlay>
                 <CardTitle>{dish.name}</CardTitle>
             </CardImgOverlay>

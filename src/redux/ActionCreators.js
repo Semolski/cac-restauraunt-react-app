@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import {DISHES} from '../shared/dishes';
-
+import { baseUrl} from "../shared/baseUrl";
 
 // addComment is a function that creates an action object
 // These 4 parameters will be mapped inside the payload object
@@ -28,15 +28,22 @@ export const fetchDishes = () => (dispatch) => {
     // This is the inner function.
     dispatch(dishesLoading(true));
 
+    // This will fetch the dishes and once they are obtained
+    // then they are pushed into the Redux Store.
+    return fetch(baseUrl + 'dishes')
+        .then(response => response.json())
+        .then(dishes => dispatch(addDishes(dishes)));
     // setTimeout is introducing a delay. But it will be replaced with
     // an asyncronous call to a server.
     // the setTimeout will supply a function with a delay
     // after the 2000ms delay, a call to another function will be
     // dispatched called addDishes with the DISHES that have been imported.
-    // This will push the dishes into the state of the Store.
-    setTimeout(() => {
-        dispatch(addDishes(DISHES));
-    }, 2000);
+    // // This will push the dishes into the state of the Store.
+    // This was originally put in place to simulate communication with
+    // the server.
+    // setTimeout(() => {
+    //     dispatch(addDishes(DISHES));
+    // }, 2000);
 }
 
 // This is a function () which returns an action
@@ -77,3 +84,42 @@ export const addDishes = (dishes) => ({
 // They are going to effected only the dishes part of the state
 // of the application so, the actions should only be in
 // dishes.js
+
+export const fetchComments = () => (dispatch) => {
+    return fetch(baseUrl + 'comments')
+        .then(response => response.json())
+        // When comments are obtained, they will be dispatched to
+        // a function called addComments
+        .then(comments => dispatch(addComments(comments)));
+}
+
+export const commentsFailed = (errmess) => ({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errmess
+});
+
+export const addComments = (comments) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
+});
+
+export const fetchPromos = () => (dispatch) => {
+    dispatch(promosLoading());
+        return fetch(baseUrl + 'promotions')
+            .then(response => response.json())
+            .then(promos => dispatch(addPromos(promos)));
+}
+
+export const promosLoading = () => ({
+    type: ActionTypes.PROMOS_LOADING
+});
+
+export const promosFailed = (errmess) => ({
+    type: ActionTypes.PROMOS_FAILED,
+    payload: errmess
+});
+
+export const addPromos = (promos) => ({
+    type: ActionTypes.ADD_PROMOS,
+    payload: promos
+});

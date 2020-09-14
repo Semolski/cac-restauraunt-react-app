@@ -3,8 +3,9 @@ import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb
 import { Link } from 'react-router-dom'
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent'
+import {baseUrl} from "../shared/baseUrl";
 
-    // componentDidMount() {
+// componentDidMount() {
     //     console.log('Dishdetail Component componentDidMount ')
     // }
     //
@@ -18,7 +19,7 @@ import { Loading } from './LoadingComponent'
         return(
             <div className="col-12 col-md-5 m-1">
                 <Card>
-                    <CardImg top src={dish.image} alt={dish.id}/>
+                    <CardImg top src={baseUrl + dish.image} alt={dish.id}/>
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>

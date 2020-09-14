@@ -33,7 +33,7 @@ export const Dishes = (state = {
         // When ADD_DISHES is passed into this reducer, then whatever is passed in in the
             // payload of the action object, that will be set equal to the dishes.
         case ActionTypes.ADD_DISHES:
-            return {...state, isLoading: false, errMess: null, dishes: action.payload }
+            return {...state, isLoading: false, errMess: null, dishes: action.payload}
 
         // When we recieve an action of the type DISHES_LOADING,
             // we will return: first taking the current value of the state
