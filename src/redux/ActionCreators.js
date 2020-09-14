@@ -30,9 +30,32 @@ export const fetchDishes = () => (dispatch) => {
 
     // This will fetch the dishes and once they are obtained
     // then they are pushed into the Redux Store.
+    // This has been updated to handle errors
+    // the response could either be sending back the data or an
+    // error response from the server.
+    // promises can be chained together.
+    // Once one promise is fufilled it will move on
+    // to the next.
     return fetch(baseUrl + 'dishes')
+        .then(response => {
+            if(response.ok){
+                return response;
+            }
+            // Generrate a new error object
+            else {
+                var error = new Error('Error' + response.status +
+                response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, // error handler from when you don't hear ack from server.
+            error => {
+             var errmess = new Error(error.message);
+             throw errmess;
+            })
         .then(response => response.json())
-        .then(dishes => dispatch(addDishes(dishes)));
+        .then(dishes => dispatch(addDishes(dishes)))
+        .catch(error => dispatch(dishesFailed(error.message)));
     // setTimeout is introducing a delay. But it will be replaced with
     // an asyncronous call to a server.
     // the setTimeout will supply a function with a delay
@@ -87,10 +110,28 @@ export const addDishes = (dishes) => ({
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + 'comments')
+        .then(response => {
+                if(response.ok){
+                    return response;
+                }
+                // Generrate a new error object
+                else {
+                    var error = new Error('Error' + response.status +
+                        response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            }, // error handler from when you don't hear ack from server.
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
         .then(response => response.json())
         // When comments are obtained, they will be dispatched to
         // a function called addComments
-        .then(comments => dispatch(addComments(comments)));
+        .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
+
 }
 
 export const commentsFailed = (errmess) => ({
@@ -106,8 +147,25 @@ export const addComments = (comments) => ({
 export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading());
         return fetch(baseUrl + 'promotions')
+            .then(response => {
+                    if(response.ok){
+                        return response;
+                    }
+                    // Generrate a new error object
+                    else {
+                        var error = new Error('Error' + response.status +
+                            response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                }, // error handler from when you don't hear ack from server.
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
             .then(response => response.json())
-            .then(promos => dispatch(addPromos(promos)));
+            .then(promos => dispatch(addPromos(promos)))
+            .catch(error => dispatch(promosFailed(error.message)));
 }
 
 export const promosLoading = () => ({
