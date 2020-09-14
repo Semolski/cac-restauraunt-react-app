@@ -10,6 +10,8 @@ import { Switch, Route, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import { postComment, fetchDishes, fetchPromos, fetchComments } from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
+import { TransitionGroup, CSSTransition} from 'react-transition-group';
+
 
 // addComment was removed from import and postComment was replaced.
 // The actions that we import from react-redux-form, adds in the nessecary actions
@@ -154,6 +156,8 @@ class Main extends Component {
         return (
             <div>
                 <Header />
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
                 {/*This will switch between the routes based on how we specify the routes*/}
                 <Switch>
                     <Route path="/home" component={Homepage} />
@@ -165,14 +169,16 @@ class Main extends Component {
                      match it encounters. */}
                     <Route path="/menu/:dishId" component={DishWithId} />
                     <Route path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
-                    // This Contact route needed to be updated for the form.
-                    // We need to pass in an attribute to the Contact component.
-                    // The arrow function allows us to send this attribute as a property
-                    // to the Contact component.
+                    {/*// This Contact route needed to be updated for the form.*/}
+                    {/*// We need to pass in an attribute to the Contact component.*/}
+                    {/*// The arrow function allows us to send this attribute as a property*/}
+                    {/*// to the Contact component.*/}
                     <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm } />} />
                     {/*    Redirect can specify default route*/}
                     <Redirect to="/home"/>
                 </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         );

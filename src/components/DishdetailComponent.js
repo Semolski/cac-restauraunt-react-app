@@ -1,5 +1,13 @@
 import React from "react";
-import {Card, CardImg, CardBody, CardText, CardTitle, BreadcrumbItem, Breadcrumb, Button} from "reactstrap";
+import {
+    Card,
+    CardImg,
+    CardBody,
+    CardText,
+    CardTitle,
+    BreadcrumbItem,
+    Breadcrumb,
+} from "reactstrap";
 import { Link } from 'react-router-dom'
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent'
@@ -48,7 +56,7 @@ import {baseUrl} from "../shared/baseUrl";
                         {/*// dishId and addComment have been extracted already from the props.*/}
                         {/*// so they are already available to use. They will be passed to the CommentForm*/}
                         {/*// component.*/}
-                        <CommentForm dishId={dishId} postComment={postomment} />
+                        <CommentForm dishId={dishId} postComment={postComment} />
                     </ul>
                 </div>
             );

@@ -20,12 +20,12 @@ export const addComment = (comment) => ({
 export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     // To import we will create a new JS object and then
     // map in the parameters.
-        const NewComment = {
+        const newComment = {
             dishId: dishId,
             rating: rating,
             author: author,
             comment: comment
-        }
+        };
         newComment.date = new Date().toISOString();
         // fetch operation
         // It will take the JS object and turn it into JSON,
