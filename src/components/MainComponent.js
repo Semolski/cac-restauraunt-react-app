@@ -8,9 +8,10 @@ import Footer from './FooterComponent'
 import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { addComment, fetchDishes, fetchPromos, fetchComments } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchPromos, fetchComments } from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 
+// addComment was removed from import and postComment was replaced.
 // The actions that we import from react-redux-form, adds in the nessecary actions
 // for resetting the form, in this case it is called 'feedback'
 
@@ -58,7 +59,8 @@ const mapStateToProps = state => {
 // the lifecycle method of the component called componentDidMount
 
 const mapDispatchToProps = (dispatch) => ({
-   addComment: (dishId, rating, author, comment) => dispatch(addComment (dishId, rating, author, comment)),
+   postComment: (dishId, rating, author, comment) =>
+       dispatch(postComment (dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishes())},
     // The form will be named as feedback
     resetFeedbackForm:() => {dispatch(actions.reset('feedback'))},
@@ -144,7 +146,7 @@ class Main extends Component {
                             comments={this.props.comments.comments.filter((comment) =>
                                 comment.dishId === parseInt(match.params.dishId,10))}
                             commentsErrMess={this.props.comments.errMess}
-                            addComment={this.props.addComment}
+                            postComment={this.props.postComment}
                 />
             )
         };

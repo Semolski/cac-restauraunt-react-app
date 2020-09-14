@@ -39,11 +39,18 @@ export const Comments = (state = {
             // object that can be returned by the reducer function.
             // Note: The comments are ONLY being added to memory at this time.
             // if the app is restarted, the added comment will be gone.
-        comment.id = state.comments.length;
-        comment.date = new Date().toISOString();
+
+         // This line can now be removed because the id and Date
+            // are coming from the server.
+        // comment.id = state.comments.length;
+        // comment.date = new Date().toISOString();
         // Here the state shape has changed from the original,
             // curly brackets must be placed around it {...}
             // from state.concat(comment)
+            // When a comment is posted it will first be sent over
+            // to the server and if it is sussessfully added on the
+            // server side, and it sends back a success,*** only then
+            // will it be added to the redux store. ***
         return {...state, comments: state.comments.concat(comment)};
         default:
             return state;

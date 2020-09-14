@@ -31,7 +31,7 @@ import {baseUrl} from "../shared/baseUrl";
 // In the RenderComments function, along with the comments, it
 // will also recieve addComment, and dishId.
 // Those two just need to passed directly to the comment form.
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
         if (comments != null)
             return(
                 <div className="col-12 col-md-5 m-1">
@@ -48,7 +48,7 @@ import {baseUrl} from "../shared/baseUrl";
                         {/*// dishId and addComment have been extracted already from the props.*/}
                         {/*// so they are already available to use. They will be passed to the CommentForm*/}
                         {/*// component.*/}
-                        <CommentForm dishId={dishId} addComment={addComment} />
+                        <CommentForm dishId={dishId} postComment={postomment} />
                     </ul>
                 </div>
             );
@@ -112,7 +112,7 @@ const DishDetail = (props) => {
                         {/*Now that comments are being passed in separately from the dish, it doesn't
                         need to be props.dish.comments */}
                         <RenderComments comments={props.comments}
-                         addComment={props.addComment}
+                         postComment={props.postComment}
                         dishId={props.dish.id}/>
                     </div>
 

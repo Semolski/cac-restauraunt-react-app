@@ -9,15 +9,61 @@ import { baseUrl} from "../shared/baseUrl";
 // Next it will be sent to the Store.
 
 //
-export const addComment = (dishId, rating, author, comment) => ({
+export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
-    payload: {
-        dishId: dishId,
-        rating: rating,
-        author: author,
-        comment: comment
-    }
+    payload: comment
 });
+// This will add a POST operation to the server.
+// addComment above will now be used to push the comments
+// into the Redux store.
+// Doing this also means that the reducer must be updated.
+export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+    // To import we will create a new JS object and then
+    // map in the parameters.
+        const NewComment = {
+            dishId: dishId,
+            rating: rating,
+            author: author,
+            comment: comment
+        }
+        newComment.date = new Date().toISOString();
+        // fetch operation
+        // It will take the JS object and turn it into JSON,
+        // then put it into the body of the message
+        return fetch(baseUrl + 'comments', {
+            method: 'POST',
+            body: JSON.stringify(newComment),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+            .then(response => {
+                    if(response.ok){
+                        return response;
+                    }
+                    // Generrate a new error object
+                    else {
+                        var error = new Error('Error' + response.status +
+                            response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                }, // error handler from when you don't hear ack from server.
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response => dispatch(addComment(response)))
+            // The response coming in from the server will post
+            // the new comment. When the comment is posted into
+            // the server it will be given an id and then send
+            // back the updated comment.
+            .catch(error => { console.log('Post comments', error.message)
+                alert('Your comment could not be posted\nError: '+ error.message); })
+}
+
 
 // This export will be created as a thunk which is why we see
 // () a function there. The function will be returned by this function
