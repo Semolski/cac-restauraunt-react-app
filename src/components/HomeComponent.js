@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
 import {Loading} from './LoadingComponent'
 import {baseUrl} from "../shared/baseUrl";
+import {FadeTransform} from 'react-animation-components';
 
 // Now RenderCard is recieving three items. So in here we will
 // some if statements.
@@ -20,17 +21,22 @@ function RenderCard({item, isLoading, errMess}) {
     // else we will return the layout of the card
     else
         return (
-            <Card>
-                <CardImg src={baseUrl + item.image} alt={item.name}/>
-                <CardBody>
-                    <CardTitle>{item.name}</CardTitle>
-                    {/*Javascript code inside JSX ... ? means not null it is rendered as cardsubtitle.
+            <FadeTransform in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+                <Card>
+                    <CardImg src={baseUrl + item.image} alt={item.name}/>
+                    <CardBody>
+                        <CardTitle>{item.name}</CardTitle>
+                        {/*Javascript code inside JSX ... ? means not null it is rendered as cardsubtitle.
                     item.designation only exists for the leader, otherwise it will be rendered as null. No element will be returned. */}
-                    {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle>:null}
-                    <CardText>{item.description}</CardText>
-                </CardBody>
-            </Card>
-        )
+                        {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle>:null}
+                        <CardText>{item.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
+        );
 }
 
 function Home(props) {

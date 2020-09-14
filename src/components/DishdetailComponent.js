@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent'
 import {baseUrl} from "../shared/baseUrl";
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 // componentDidMount() {
     //     console.log('Dishdetail Component componentDidMount ')
@@ -26,6 +27,10 @@ import {baseUrl} from "../shared/baseUrl";
     function RenderDish({dish}) {
         return(
             <div className="col-12 col-md-5 m-1">
+                <FadeTransform in
+                               transformProps={{
+                                   exitTransform: 'scale(0.5) translateY(-50%)'
+                               }}>
                 <Card>
                     <CardImg top src={baseUrl + dish.image} alt={dish.id}/>
                     <CardBody>
@@ -33,6 +38,7 @@ import {baseUrl} from "../shared/baseUrl";
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+                </FadeTransform>
             </div>
         )
     }
@@ -45,18 +51,22 @@ import {baseUrl} from "../shared/baseUrl";
                 <div className="col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     <ul className="list-unstyled">
-                        {comments.map((comment) => {
-                            return (
-                                <li key={comment.id}>
-                                    <p>{comment.comment}</p>
-                                    <p>-- {comment.author}</p>
-                                </li>
-                            );
-                        })}
+                        <Stagger in>
+                            {comments.map((comment) => {
+                                return (
+                                    <Fade in>
+                                        <li key={comment.id}>
+                                            <p>{comment.comment}</p>
+                                            <p>-- {comment.author}</p>
+                                        </li>
+                                    </Fade>
+                                );
+                            })}
                         {/*// dishId and addComment have been extracted already from the props.*/}
                         {/*// so they are already available to use. They will be passed to the CommentForm*/}
                         {/*// component.*/}
                         <CommentForm dishId={dishId} postComment={postComment} />
+                    </Stagger>
                     </ul>
                 </div>
             );
