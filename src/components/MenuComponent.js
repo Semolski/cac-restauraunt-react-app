@@ -33,9 +33,9 @@ const Menu = (props) => {
     const menu = props.dishes.dishes.map(dish => {
         return (
             <div key={dish.id} className="col-12 col-md-12 m-1">
-                <RenderMenuItem dish={dish}/>
+                <RenderMenuItem dish={dish} onClick={props.onClick}/>
             </div>
-        )
+        );
     });
 // This is copied and pasted directly from DishDetail
     // *** But be sure to add .dishes as seen below ***

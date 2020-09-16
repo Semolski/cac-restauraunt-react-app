@@ -6,7 +6,7 @@ import { Dishes } from "./dishes";
 import { Promotions } from "./promotions";
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import {InitialFeedback} from './forms'
+import { InitialFeedback } from './forms'
 
 // This creates the Redux store.
 // The whole purpose for this function is so that the store can be called.

@@ -20,13 +20,13 @@ export const Comments = (state = {
 }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_COMMENTS:
-            return {...state, errMess: null, comments: action.payload};
+            return {...state, isLoading: false, errMess: null, comments: action.payload};
 
         case ActionTypes.COMMENTS_FAILED:
-            return {...state, errMess: action.payload};
+            return {...state, isLoading: false, errMess: action.payload, comments: []};
 
         case ActionTypes.ADD_COMMENT:
-        var comment = action.payload;
+        var comment = action.payload.comment;
         // the comments are a JS array, the length tells how many
             // comments there are. Then the comments will be assigned
             // a comment id in sequential order, so the next comment
@@ -55,4 +55,4 @@ export const Comments = (state = {
         default:
             return state;
     }
-}
+};

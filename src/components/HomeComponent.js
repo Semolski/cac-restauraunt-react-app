@@ -9,8 +9,8 @@ import {FadeTransform} from 'react-animation-components';
 function RenderCard({item, isLoading, errMess}) {
     if (isLoading) {
         return (
-            <Loading />
-        )
+            <Loading/>
+        );
     }
     // if the errMess is not null then it will be passed in here.
     else if (errMess) {
@@ -19,24 +19,25 @@ function RenderCard({item, isLoading, errMess}) {
         );
     }
     // else we will return the layout of the card
-    else
+    else {
         return (
             <FadeTransform in
-            transformProps={{
-                exitTransform: 'scale(0.5) translateY(-50%)'
-            }}>
+                           transformProps={{
+                               exitTransform: 'scale(0.5) translateY(-50%)'
+                           }}>
                 <Card>
                     <CardImg src={baseUrl + item.image} alt={item.name}/>
                     <CardBody>
                         <CardTitle>{item.name}</CardTitle>
                         {/*Javascript code inside JSX ... ? means not null it is rendered as cardsubtitle.
                     item.designation only exists for the leader, otherwise it will be rendered as null. No element will be returned. */}
-                        {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle>:null}
+                        {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
                         <CardText>{item.description}</CardText>
                     </CardBody>
                 </Card>
             </FadeTransform>
         );
+    }
 }
 
 function Home(props) {
@@ -57,12 +58,16 @@ function Home(props) {
                             errMess={props.promosErrMess}
                     />
                 </div>
+                {/* item={props.leader} it HAS to be leader
+                always make sure this is correct!!! */}
                 <div className="col-12 col-md-m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader}
+                                isLoading={props.leadersLoading}
+                                errMess={props.leadersErrMess} />
                 </div>
             </div>
         </div>
     )
 }
 
-export default Home
+export default Home;

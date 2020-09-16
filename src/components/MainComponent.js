@@ -8,7 +8,7 @@ import Footer from './FooterComponent'
 import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { postComment, fetchDishes, fetchPromos, fetchComments } from '../redux/ActionCreators';
+import { postComment, postFeedback, fetchDishes, fetchPromos, fetchComments, fetchLeaders } from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 import { TransitionGroup, CSSTransition} from 'react-transition-group';
 
@@ -60,21 +60,20 @@ const mapStateToProps = state => {
 // Next the dishes must be fetched. This is where we can take the help of
 // the lifecycle method of the component called componentDidMount
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
    postComment: (dishId, rating, author, comment) =>
        dispatch(postComment (dishId, rating, author, comment)),
+    postFeedback: (feedback) => dispatch(postFeedback(feedback)),
     fetchDishes: () => { dispatch(fetchDishes())},
     // The form will be named as feedback
     resetFeedbackForm:() => {dispatch(actions.reset('feedback'))},
-    fetchComments: () =>  dispatch(fetchComments()),
-    fetchPromos: () => dispatch(fetchPromos())
+    fetchComments: () =>  {dispatch(fetchComments())},
+    fetchPromos: () => {dispatch(fetchPromos())},
+    fetchLeaders: () => {dispatch(fetchLeaders())}
 });
 
 class Main extends Component {
 
-    constructor(props) {
-        super(props);
-    }
     // Now that this component is using properties from the store, everything using the state
     // must be changed to props. Example: this.state.dishes.filter becomes this.props.dishes.filter
 
@@ -101,6 +100,7 @@ class Main extends Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
 
     render() {
@@ -123,8 +123,10 @@ class Main extends Component {
                         promo.featured)[0]}
                     promosLoading={this.props.promotions.isLoading}
                     promosErrMess={this.props.promotions.errMess}
-                    leader={this.props.leaders.filter((leader) =>
+                    leader={this.props.leaders.leaders.filter((leader) =>
                         leader.featured)[0]}
+                    leadersLoading={this.props.leaders.isLoading}
+                    leadersErrMess={this.props.leaders.errMess}
                 />
             )
         };
@@ -148,9 +150,8 @@ class Main extends Component {
                             comments={this.props.comments.comments.filter((comment) =>
                                 comment.dishId === parseInt(match.params.dishId,10))}
                             commentsErrMess={this.props.comments.errMess}
-                            postComment={this.props.postComment}
-                />
-            )
+                            postComment={this.props.postComment} />
+            );
         };
 
         return (
@@ -173,7 +174,7 @@ class Main extends Component {
                     {/*// We need to pass in an attribute to the Contact component.*/}
                     {/*// The arrow function allows us to send this attribute as a property*/}
                     {/*// to the Contact component.*/}
-                    <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm } />} />
+                    <Route exact path="/contactus" component={() => <Contact postFeedback={this.props.postFeedback} resetFeedbackForm={this.props.resetFeedbackForm} />} />
                     {/*    Redirect can specify default route*/}
                     <Redirect to="/home"/>
                 </Switch>

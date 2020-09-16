@@ -1,6 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import {DISHES} from '../shared/dishes';
-import { baseUrl} from "../shared/baseUrl";
+import {baseUrl} from "../shared/baseUrl";
 
 // addComment is a function that creates an action object
 // These 4 parameters will be mapped inside the payload object
@@ -11,7 +10,9 @@ import { baseUrl} from "../shared/baseUrl";
 //
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
-    payload: comment
+    payload: {
+        comment: comment
+    }
 });
 // This will add a POST operation to the server.
 // addComment above will now be used to push the comments
@@ -20,49 +21,50 @@ export const addComment = (comment) => ({
 export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     // To import we will create a new JS object and then
     // map in the parameters.
-        const newComment = {
-            dishId: dishId,
-            rating: rating,
-            author: author,
-            comment: comment
-        };
-        newComment.date = new Date().toISOString();
-        // fetch operation
-        // It will take the JS object and turn it into JSON,
-        // then put it into the body of the message
-        return fetch(baseUrl + 'comments', {
-            method: 'POST',
-            body: JSON.stringify(newComment),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                    if(response.ok){
-                        return response;
-                    }
-                    // Generrate a new error object
-                    else {
-                        var error = new Error('Error' + response.status +
-                            response.statusText);
-                        error.response = response;
-                        throw error;
-                    }
-                }, // error handler from when you don't hear ack from server.
-                error => {
-                    var errmess = new Error(error.message);
-                    throw errmess;
-                })
-            .then(response => response.json())
-            .then(response => dispatch(addComment(response)))
-            // The response coming in from the server will post
-            // the new comment. When the comment is posted into
-            // the server it will be given an id and then send
-            // back the updated comment.
-            .catch(error => { console.log('Post comments', error.message)
-                alert('Your comment could not be posted\nError: '+ error.message); })
-}
+    const newComment = {
+        dishId: dishId,
+        rating: rating,
+        author: author,
+        comment: comment
+    };
+    newComment.date = new Date().toISOString();
+    // fetch operation
+    // It will take the JS object and turn it into JSON,
+    // then put it into the body of the message
+    return fetch(baseUrl + 'comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+        .then(response => {
+                if(response.ok){
+                    return response;
+                }
+                // Generrate a new error object
+                else {
+                    var error = new Error('Error' + response.status +
+                        response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            }, // error handler from when you don't hear ack from server.
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        // The response coming in from the server will post
+        // the new comment. When the comment is posted into
+        // the server it will be given an id and then send
+        // back the updated comment.
+        .catch(error => { console.log('post comments ', error.message);
+            alert('Your comment could not be posted\nError: '+ error.message);
+        });
+};
 
 
 // This export will be created as a thunk which is why we see
@@ -84,20 +86,19 @@ export const fetchDishes = () => (dispatch) => {
     // to the next.
     return fetch(baseUrl + 'dishes')
         .then(response => {
-            if(response.ok){
-                return response;
-            }
-            // Generrate a new error object
-            else {
-                var error = new Error('Error' + response.status +
-                response.statusText);
-                error.response = response;
-                throw error;
-            }
-        }, // error handler from when you don't hear ack from server.
+                if(response.ok){
+                    return response;
+                }
+                // Generrate a new error object
+                else {
+                    var error = new Error('Error' + response.status +
+                        response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            }, // error handler from when you don't hear ack from server.
             error => {
-             var errmess = new Error(error.message);
-             throw errmess;
+                throw new Error(error.message);
             })
         .then(response => response.json())
         .then(dishes => dispatch(addDishes(dishes)))
@@ -113,7 +114,7 @@ export const fetchDishes = () => (dispatch) => {
     // setTimeout(() => {
     //     dispatch(addDishes(DISHES));
     // }, 2000);
-}
+};
 
 // This is a function () which returns an action
 // it will not return any data, only a type.
@@ -144,7 +145,7 @@ export const addDishes = (dishes) => ({
     payload: dishes
 });
 
-// Now all the four differen  action creator functions
+// Now all the four different  action creator functions
 // are set up. 3 of them are returning an action object.
 // The 4th one is a thunk that is returning a function
 // that is going to dispatch several actions.
@@ -160,17 +161,16 @@ export const fetchComments = () => (dispatch) => {
                 if(response.ok){
                     return response;
                 }
-                // Generrate a new error object
+                // Generate a new error object
                 else {
-                    var error = new Error('Error' + response.status +
+                    var error = new Error('Error' + response.status + ':' +
                         response.statusText);
                     error.response = response;
                     throw error;
                 }
             }, // error handler from when you don't hear ack from server.
             error => {
-                var errmess = new Error(error.message);
-                throw errmess;
+                throw new Error(error.message);
             })
         .then(response => response.json())
         // When comments are obtained, they will be dispatched to
@@ -190,29 +190,32 @@ export const addComments = (comments) => ({
     payload: comments
 });
 
+//
+// Promotions
+//
+
 export const fetchPromos = () => (dispatch) => {
-    dispatch(promosLoading());
-        return fetch(baseUrl + 'promotions')
-            .then(response => {
-                    if(response.ok){
-                        return response;
-                    }
-                    // Generrate a new error object
-                    else {
-                        var error = new Error('Error' + response.status +
-                            response.statusText);
-                        error.response = response;
-                        throw error;
-                    }
-                }, // error handler from when you don't hear ack from server.
-                error => {
-                    var errmess = new Error(error.message);
-                    throw errmess;
-                })
-            .then(response => response.json())
-            .then(promos => dispatch(addPromos(promos)))
-            .catch(error => dispatch(promosFailed(error.message)));
-}
+    dispatch(promosLoading(true));
+    return fetch(baseUrl + 'promotions')
+        .then(response => {
+                if(response.ok){
+                    return response;
+                }
+                // Generate a new error object
+                else {
+                    var error = new Error('Error' + response.status + ':' +
+                        response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            }, // error handler from when you don't hear ack from server.
+            error => {
+                throw new Error(error.message);
+            })
+        .then(response => response.json())
+        .then(promos => dispatch(addPromos(promos)))
+        .catch(error => dispatch(promosFailed(error.message)));
+};
 
 export const promosLoading = () => ({
     type: ActionTypes.PROMOS_LOADING
@@ -227,3 +230,77 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+//
+// Leaders
+//
+
+
+export const fetchLeaders = () => (dispatch) => {
+    dispatch(leadersLoading(true));
+
+    return fetch(baseUrl + 'leaders')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    var error = new Error('Error' + response.status + ':' +
+                        response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw new Error(error.message);
+            })
+        .then(response => response.json())
+        .then(leaders => dispatch(addLeaders(leaders)))
+        .catch(error => dispatch(leadersFailed(error.message)));
+}
+export const addLeaders = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leaders
+});
+
+export const leadersLoading = () => ({
+    type: ActionTypes.LEADERS_LOADING
+})
+
+export const leadersFailed = (errmess) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: errmess
+})
+
+export const postFeedback = (feedback) => () => {
+
+    const newFeedback = { date: new Date().toISOString(), ...feedback};
+
+    return fetch(baseUrl + 'feedback', {
+        method: 'POST',
+        body: JSON.stringify(newFeedback),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw new Error(error.message);
+            })
+        .then(response => response.json())
+        .then(response => alert('We appreciate your feedback!' + JSON.stringify(response)))
+        .catch(error => {
+            console.log('post feedback ', error.message);
+            alert('Your feedback could not be posted\nError: ' + error.message);
+        });
+
+};
