@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return (
         <Provider store={store}>
-            <BrowserRouter basename="semolski.github.io">
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div>
                     <Main />
                 </div>
