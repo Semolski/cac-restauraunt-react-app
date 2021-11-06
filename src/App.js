@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import Main from './components/MainComponent'
+import Main from './components/main/main.component';
 import './App.css';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ConfigureStore } from "./redux/configureStore";
+import { Store } from './redux/store';
 
-// importing Provider allows the Store to be available across the application.
-
-// This makes the 'store' available to use below to make it available to all components.
-const store = ConfigureStore();
+const store = Store();
 
 class App extends Component {
 
-  render() {
-    return (
-        <Provider store={store}>
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
-                <div>
-                    <Main />
-                </div>
-            </BrowserRouter>
-        </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <BrowserRouter>
+                    <div>
+                        <Main />
+                    </div>
+                </BrowserRouter>
+            </Provider>
+        );
+    }
 }
 
 export default App;
