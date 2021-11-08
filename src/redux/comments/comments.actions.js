@@ -1,8 +1,8 @@
-import * as ActionTypes from "../ActionTypes";
 import {baseUrl} from "../../shared/baseUrl";
+import CommentsActionTypes from '../comments/comments.types';
 
 export const addComment = (comment) => ({
-    type: ActionTypes.ADD_COMMENT,
+    type: CommentsActionTypes.ADD_COMMENT,
     payload: comment
 });
 
@@ -28,12 +28,12 @@ export const fetchComments = () => (dispatch) => {
 }
 
 export const commentsFailed = (errmess) => ({
-    type: ActionTypes.COMMENTS_FAILED,
+    type: CommentsActionTypes.FETCH_COMMENTS_FAILURE,
     payload: errmess
 });
 
 export const addComments = (comments) => ({
-    type: ActionTypes.ADD_COMMENTS,
+    type: CommentsActionTypes.ADD_COMMENTS,
     payload: comments
 });
 
