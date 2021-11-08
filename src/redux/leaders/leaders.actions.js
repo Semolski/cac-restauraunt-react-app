@@ -1,5 +1,5 @@
 import {baseUrl} from "../../shared/baseUrl";
-import * as ActionTypes from "../ActionTypes";
+import LeadersActionTypes from "./leaders.types";
 
 export const fetchLeaders = () => (dispatch) => {
 
@@ -25,15 +25,15 @@ export const fetchLeaders = () => (dispatch) => {
 }
 
 export const leadersLoading = () => ({
-    type: ActionTypes.LEADERS_LOADING
+    type: LeadersActionTypes.FETCH_LEADERS_START
 });
 
 export const leadersFailed = (errmess) => ({
-    type: ActionTypes.LEADERS_FAILED,
+    type: LeadersActionTypes.FETCH_LEADERS_FAILURE,
     payload: errmess
 });
 
 export const addLeaders = (leaders) => ({
-    type: ActionTypes.ADD_LEADERS,
+    type: LeadersActionTypes.ADD_LEADERS,
     payload: leaders
 });
