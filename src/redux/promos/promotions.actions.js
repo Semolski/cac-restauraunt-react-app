@@ -1,5 +1,19 @@
 import {baseUrl} from "../../shared/baseUrl";
-import * as ActionTypes from "../ActionTypes";
+import PromotionsActionTypes from './promotions.types';
+
+export const promosLoading = () => ({
+    type: PromotionsActionTypes.FETCH_PROMOS_START
+});
+
+export const promosFailed = (errmess) => ({
+    type: PromotionsActionTypes.FETCH_PROMOS_SUCCESS,
+    payload: errmess
+});
+
+export const addPromos = (promos) => ({
+    type: PromotionsActionTypes.FETCH_PROMOS_FAILURE,
+    payload: promos
+});
 
 export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading(true));
@@ -23,17 +37,3 @@ export const fetchPromos = () => (dispatch) => {
         .then(promos => dispatch(addPromos(promos)))
         .catch(error => dispatch(promosFailed(error.message)));
 }
-
-export const promosLoading = () => ({
-    type: ActionTypes.PROMOS_LOADING
-});
-
-export const promosFailed = (errmess) => ({
-    type: ActionTypes.PROMOS_FAILED,
-    payload: errmess
-});
-
-export const addPromos = (promos) => ({
-    type: ActionTypes.ADD_PROMOS,
-    payload: promos
-});
