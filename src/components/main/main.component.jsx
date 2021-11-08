@@ -8,7 +8,9 @@ import Footer from '../footer/footer.component'
 import About from "../about/about.component";
 import { Switch, Route, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { postFeedback, fetchDishes, fetchComments, fetchLeaders } from '../../redux/ActionCreators';
+import { fetchComments, fetchLeaders } from '../../redux/ActionCreators';
+import { fetchDishes } from '../../redux/dishes/dishes.actions';
+import { postFeedback } from '../../redux/feedback/feedback.actions';
 import { postComment } from '../../redux/comments/comments.actions';
 import { fetchPromos } from '../../redux/promos/promotions.actions';
 import {actions} from 'react-redux-form';

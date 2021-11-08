@@ -1,5 +1,5 @@
 import {baseUrl} from "../../shared/baseUrl";
-import * as ActionTypes from "../ActionTypes";
+import DishesActionTypes from "./dishes.types";
 
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading(true));
@@ -25,15 +25,15 @@ export const fetchDishes = () => (dispatch) => {
 }
 
 export const dishesLoading = () => ({
-    type: ActionTypes.DISHES_LOADING
+    type: DishesActionTypes.FETCH_DISHES_START
 });
 
 export const dishesFailed = (errmess) => ({
-    type: ActionTypes.DISHES_FAILED,
+    type: DishesActionTypes.FETCH_DISHES_FAILURE,
     payload: errmess
 });
 
 export const addDishes = (dishes) => ({
-    type: ActionTypes.ADD_DISHES,
+    type: DishesActionTypes.FETCH_DISHES_SUCCESS,
     payload: dishes
 });
