@@ -1,5 +1,4 @@
-
-import * as ActionTypes from '../ActionTypes';
+import FavoritesActionTypes from "./favorites.types";
 
 export const favorites = (state = {
     isLoading: true,
@@ -7,13 +6,13 @@ export const favorites = (state = {
     favorites: null
 }, action) => {
     switch(action.type) {
-        case ActionTypes.ADD_FAVORITES:
+        case FavoritesActionTypes.FETCH_ADD_FAVORITES:
             return {...state, isLoading: false, errMess: null, favorites: action.payload};
 
-        case ActionTypes.FAVORITES_LOADING:
+        case FavoritesActionTypes.FETCH_FAVORITES_START:
             return {...state, isLoading: true, errMess: null, favorites: null};
 
-        case ActionTypes.FAVORITES_FAILED:
+        case FavoritesActionTypes.FETCH_FAVORITES_FAILURE:
             return {...state, isLoading: false, errMess: action.payload, favorites: null};
 
         default:

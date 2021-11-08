@@ -1,5 +1,5 @@
 import {baseUrl} from "../../shared/baseUrl";
-import * as ActionTypes from "../ActionTypes";
+import FavoritesActionTypes from "./favorites.types";
 
 export const postFavorite = (dishId) => (dispatch) => {
 
@@ -89,15 +89,15 @@ export const fetchFavorites = () => (dispatch) => {
 }
 
 export const favoritesLoading = () => ({
-    type: ActionTypes.FAVORITES_LOADING
+    type: FavoritesActionTypes.FETCH_FAVORITES_START
 });
 
 export const favoritesFailed = (errmess) => ({
-    type: ActionTypes.FAVORITES_FAILED,
+    type: FavoritesActionTypes.FETCH_FAVORITES_FAILURE,
     payload: errmess
 });
 
 export const addFavorites = (favorites) => ({
-    type: ActionTypes.ADD_FAVORITES,
+    type: FavoritesActionTypes.FETCH_ADD_FAVORITES,
     payload: favorites
 });
