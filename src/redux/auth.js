@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes';
+import UserActionTypes from "./user/user.types";
 
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
@@ -11,31 +11,31 @@ export const Auth = (state = {
     errMess: null
 }, action) => {
     switch (action.type) {
-        case ActionTypes.LOGIN_REQUEST:
+        case UserActionTypes.LOGIN_REQUEST:
             return {...state,
                 isLoading: true,
                 isAuthenticated: false,
                 user: action.creds
             };
-        case ActionTypes.LOGIN_SUCCESS:
+        case UserActionTypes.LOGIN_SUCCESS:
             return {...state,
                 isLoading: false,
                 isAuthenticated: true,
                 errMess: '',
                 token: action.token
             };
-        case ActionTypes.LOGIN_FAILURE:
+        case UserActionTypes.LOGIN_FAILURE:
             return {...state,
                 isLoading: false,
                 isAuthenticated: false,
                 errMess: action.message
             };
-        case ActionTypes.LOGOUT_REQUEST:
+        case UserActionTypes.LOGOUT_REQUEST:
             return {...state,
                 isLoading: true,
                 isAuthenticated: true
             };
-        case ActionTypes.LOGOUT_SUCCESS:
+        case UserActionTypes.LOGOUT_SUCCESS:
             return {...state,
                 isLoading: false,
                 isAuthenticated: false,
