@@ -1,6 +1,6 @@
 import FavoritesActionTypes from "./favorites.types";
 
-export const favorites = (state = {
+export const Favorites = (state = {
     isLoading: true,
     errMess: null,
     favorites: null
