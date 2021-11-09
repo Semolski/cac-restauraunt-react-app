@@ -1,5 +1,4 @@
 import UserActionTypes from "./user.types";
-import {baseUrl} from "../../shared/baseUrl";
 import {favoritesFailed, fetchFavorites} from "../favorite/favorites.actions";
 
 export const requestLogin = (creds) => {

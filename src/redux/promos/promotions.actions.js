@@ -1,4 +1,3 @@
-import {baseUrl} from "../../shared/baseUrl";
 import PromotionsActionTypes from './promotions.types';
 
 export const promosLoading = () => ({

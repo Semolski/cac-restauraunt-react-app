@@ -1,8 +1,14 @@
 import React from "react";
-import {Card, CardImg, CardTitle, CardImgOverlay, Breadcrumb, BreadcrumbItem} from "reactstrap";
+import {
+    Card,
+    CardImg,
+    CardTitle,
+    CardImgOverlay,
+    Breadcrumb,
+    BreadcrumbItem
+} from "reactstrap";
 import { Link } from 'react-router-dom';
 import { Loading } from '../loading/loading.component';
-import { baseUrl} from "../../shared/baseUrl";
 
 function RenderMenuItem({dish, onClick}) {
     return (
@@ -29,7 +35,6 @@ function RenderMenuItem({dish, onClick}) {
 
 
 const Menu = (props) => {
-    // the menu const will be changed to props.dishes.dishes.
     const menu = props.dishes.dishes.map(dish => {
         return (
             <div key={dish.id} className="col-12 col-md-12 m-1">
@@ -37,8 +42,6 @@ const Menu = (props) => {
             </div>
         );
     });
-// This is copied and pasted directly from DishDetail
-    // *** But be sure to add .dishes as seen below ***
     if (props.dishes.isLoading) {
         return(
             <div className="container">s
@@ -77,7 +80,6 @@ const Menu = (props) => {
                 <div className="row">
                     {menu}
                 </div>
-                {/*{this.renderDish(this.state.selectedDish)}*/}
             </div>
         )
 };

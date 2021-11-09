@@ -1,4 +1,4 @@
-import {baseUrl} from "../../shared/baseUrl";
+import { baseUrl } from "../../shared/baseUrl";
 
 export const postFeedback = (feedback) => (dispatch) => {
 

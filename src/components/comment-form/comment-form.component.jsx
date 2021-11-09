@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
-import {Modal, ModalBody, ModalHeader, Button, Label, Row, Col,} from 'reactstrap';
-import {Control, LocalForm, Errors} from "react-redux-form";
+import {
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Button,
+    Label,
+    Row,
+    Col
+} from 'reactstrap';
+import {
+    Control,
+    LocalForm,
+    Errors
+} from "react-redux-form";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -24,9 +36,6 @@ class CommentFormComponent extends Component {
 
     handleSubmit(values) {
         this.toggleModal()
-        // console.log("Current State is: " + JSON.stringify(values));
-        // alert("Current State is: " + JSON.stringify(values));
-        // event.preventDefault();
         this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 

@@ -27,9 +27,6 @@ class Contact extends Component {
         console.log("PROPS IN CONTACT COMPONENT - handleSubmit");
 
         console.log(this.props);
-        // console.log(values);
-        // console.log("Current State is" + JSON.stringify(values));
-        // alert("Current State is: " + JSON.stringify(values));
         this.props.postFeedback(values);
         this.props.resetFeedbackForm();
     }

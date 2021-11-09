@@ -1,7 +1,5 @@
 import React from 'react';
 
-// this is a functional component which will return an arrow function.
-// which will return a loading spinner.
 export const Loading = () => {
     return (
         <div className="col-12">
